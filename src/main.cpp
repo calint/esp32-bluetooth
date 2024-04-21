@@ -1,7 +1,4 @@
 #include "BluetoothA2DPSource.h"
-#include <cmath>
-
-#define c3_frequency 130.81
 
 BluetoothA2DPSource a2dp_source;
 
@@ -11,21 +8,15 @@ BluetoothA2DPSource a2dp_source;
 int32_t get_data_frames(Frame *frame, int32_t frame_count) {
   // ESP_LOGD("MAIN", "frame_count: %d", frame_count);
 
-  static float m_time = 0.0;
-  float m_amplitude = 10000.0; // -32,768 to 32,767
-  float m_deltaTime = 1.0 / 44100.0;
-  float m_phase = 0.0;
-  float pi_2 = M_PI * 2.0;
-  // fill the channel data
+  static int16_t amp = 0;
   for (int sample = 0; sample < frame_count; ++sample) {
-    float angle = pi_2 * c3_frequency * m_time + m_phase;
-    frame[sample].channel1 = m_amplitude * sin(angle);
+    frame[sample].channel1 = amp;
     frame[sample].channel2 = frame[sample].channel1;
-    m_time += m_deltaTime;
+    amp += 100;
   }
+
   // to prevent watchdog
-  delay(1);
-  // esp_task_wdt_reset();
+  esp_task_wdt_reset();
 
   return frame_count;
 }
