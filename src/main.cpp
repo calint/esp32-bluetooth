@@ -20,7 +20,7 @@ void loop() {
 // The supported audio codec in ESP32 A2DP is SBC. SBC audio stream is encoded
 // from PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit
 // sample data
-static int32_t callback_write_data_frames(Frame *frame, int32_t frame_count) {
+static int32_t callback_write_data_frames(Frame *frame, int32_t const frame_count) {
   static int16_t amp = 0;
 
   // ESP_LOGD("MAIN", "frame_count: %d", frame_count);
