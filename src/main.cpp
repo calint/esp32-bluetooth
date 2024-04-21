@@ -1,8 +1,8 @@
 #include "BluetoothA2DPSource.h"
 
-constexpr char const *speaker_name = "JBL Go 3";
+static constexpr char const *speaker_name = "JBL Go 3";
 
-BluetoothA2DPSource a2dp_source;
+static BluetoothA2DPSource a2dp_source;
 
 static int32_t write_data_frames(Frame *frame, int32_t frame_count);
 
