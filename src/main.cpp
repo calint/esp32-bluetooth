@@ -25,6 +25,7 @@ int32_t get_data_frames(Frame *frame, int32_t frame_count) {
   }
   // to prevent watchdog
   delay(1);
+  // esp_task_wdt_reset();
 
   return frame_count;
 }
