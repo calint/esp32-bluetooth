@@ -27,7 +27,7 @@ static int32_t callback_write_data_frames(Frame *frame, int32_t const frame_coun
 
   for (int sample = 0; sample < frame_count; ++sample) {
     frame[sample].channel1 = amp;
-    frame[sample].channel2 = frame[sample].channel1;
+    frame[sample].channel2 = amp;
     amp += 100;
   }
 
