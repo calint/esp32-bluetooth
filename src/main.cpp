@@ -1,5 +1,5 @@
 #include "BluetoothA2DPSource.h"
-#include <math.h>
+#include <cmath>
 
 #define c3_frequency 130.81
 
@@ -9,13 +9,13 @@ BluetoothA2DPSource a2dp_source;
 // from PCM data normally formatted as 44.1kHz sampling rate, two-channel 16-bit
 // sample data
 int32_t get_data_frames(Frame *frame, int32_t frame_count) {
-  ESP_LOGD("MAIN", "frame_count: %d", frame_count);
+  // ESP_LOGD("MAIN", "frame_count: %d", frame_count);
 
   static float m_time = 0.0;
   float m_amplitude = 10000.0; // -32,768 to 32,767
   float m_deltaTime = 1.0 / 44100.0;
   float m_phase = 0.0;
-  float pi_2 = PI * 2.0;
+  float pi_2 = M_PI * 2.0;
   // fill the channel data
   for (int sample = 0; sample < frame_count; ++sample) {
     float angle = pi_2 * c3_frequency * m_time + m_phase;
@@ -30,14 +30,12 @@ int32_t get_data_frames(Frame *frame, int32_t frame_count) {
 }
 
 void setup() {
-  printf("start\n");
+  a2dp_source.set_auto_reconnect(false);
   a2dp_source.start("JBL Go 3", get_data_frames);
-  printf("volume\n");
-  a2dp_source.set_volume(100);
-  printf("done\n");
+  a2dp_source.set_volume(50);
 }
 
 void loop() {
   // to prevent watchdog in release > 1.0.6
-  delay(100);
+  delay(1000);
 }
